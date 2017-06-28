@@ -1,0 +1,11 @@
+﻿@import "../../styles/variables/colors.scss";
+
+.home-page {
+	input[type="button"] {
+		cursor: pointer;
+	}
+	padding-top: 10px;
+	.course-list {
+		margin-top: 20px;
+	}
+}

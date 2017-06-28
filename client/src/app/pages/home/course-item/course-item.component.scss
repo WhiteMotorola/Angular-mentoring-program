@@ -1,0 +1,42 @@
+@import "../../../styles/variables/colors.scss";
+@import "../../../styles/bootstrap-override.scss";
+
+.course-item {
+	border: 1px solid $c-gray;
+	border-radius: 5px;
+	display: inline-block;
+	margin-right: 20px;
+	margin-top: 20px;
+	.course-info-wrap {
+		padding: 10px;
+		.course-title {
+			font-size: 24px;
+		}
+		.course-sub-title {
+			margin-top: 15px;
+		}
+		.course-date-duration-wrap {
+			float: right;
+			font-size: 14px;
+			margin-top: 15px;
+			.course-duration {
+				float: right;
+			}
+		}
+	}
+	.course-item-action-buttons {
+		border-top: 1px solid $c-gray;
+		font-size: 14px;
+		clear: both;
+		float: right;
+		width: 100%;
+		margin-top: 10px;
+		.course-edit-button,
+		.course-delete-button {
+			color: $c-button-color;
+			border: none;
+    	background: none;
+			float: right;
+		}
+	}
+}

@@ -1,0 +1,13 @@
+@import "../../../styles/variables/colors.scss";
+
+.main-navbar {
+	height: 70px;
+	background-color: $c-primary;
+	color: $white;
+}
+
+.logo {
+	padding-top: 10px;
+	text-align: center;
+  font-size: 32px;
+}

@@ -1,0 +1,33 @@
+@import "../../../styles/variables/colors.scss";
+
+.action-panel {
+  padding: 40px 0;
+  border-bottom: 1px solid $c-gray;
+  .action-panel-label {
+    font-size: 24px;
+  }
+  .action-panel-container {
+    padding-top: 10px;
+  }
+  .search-container {
+    float: left;
+  }
+  .search-input {
+    border-radius: 5px;
+    padding: 5px 15px;
+    border: 1px solid $c-gray;
+    outline: none;
+  }
+  .search-action,
+  .add-action,
+  .back-action {
+    background-color: $c-button-color;
+    border: none;
+    color: white;
+    padding: 6px 20px;
+    margin-left: 10px;
+  }
+  .add-action {
+    margin-left: 50px; 
+  }
+}

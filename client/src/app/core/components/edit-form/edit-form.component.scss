@@ -1,0 +1,49 @@
+@import "../../../styles/variables/colors.scss";
+
+edit-form {
+  display: none;
+
+  .edit-form-body {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    overflow: auto;
+    padding: 40px;
+    background: #fff;
+    margin: 10% 35%;
+    label {
+      display: block;
+    }
+    input {
+      margin-bottom: 20px;
+    }
+    .edit-form-actions {
+      margin-top: 20px;
+      input {
+        background-color: $c-button-color;
+        border: none;
+        color: white;
+        padding: 6px 20px;
+        margin-right: 10px;
+        cursor: pointer;
+      }
+    }
+  }
+  .edit-form-background {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: #000;
+    opacity: 0.75;
+    z-index: 900;
+  }
+}
+
+body.modal-open {
+  overflow: hidden;
+}

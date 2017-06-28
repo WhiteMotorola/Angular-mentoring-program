@@ -1,0 +1,14 @@
+<div class = "course-item col-sm-3">
+	<div class = "course-info-wrap">
+		<div class = "course-title">{{course.title}}</div>
+		<div class = "course-sub-title">{{course.subTitle}}</div>
+		<div class = "course-date-duration-wrap">
+			<div class = "course-creation-date">{{course.creationDate}}</div>
+			<div class = "course-duration">{{course.duration}}</div>
+		</div>
+	</div>
+	<div class = "course-item-action-buttons">
+		<input class = "course-delete-button" type = "button" value = "Delete" (click) = "onDeleteButtonClick()" >
+		<input class = "course-edit-button" type = "button" value = "Edit" (click) = "onEditButtonClick('edit-form')">
+	</div>
+</div>

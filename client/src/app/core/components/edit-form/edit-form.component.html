@@ -1,0 +1,18 @@
+<div class = "edit-form">
+  <div class = "edit-form-body col-sm-4">
+    <label for = "course-title">Title: </label>
+    <input type = "text" class = "course-title" [(ngModel)] = "title">
+    <label for = "course-sub-title">Description: </label>
+    <input type = "text" class = "course-sub-title" [(ngModel)] = "subTitle">
+    <label for = "course-date">Creation Date: </label>
+    <input type = "text" class = "course-date" [(ngModel)] = "creationDate">
+    <label for = "course-duration">Duration: </label>
+    <input type = "text" class = "course-duration" [(ngModel)] = "duration">
+    <div class = "edit-form-actions">
+      <input *ngIf = "!isEdit" type = "button" class = "edit-form-ok-button" value = "OK" (click) = "onOkButtonClick()">
+      <input *ngIf = "isEdit" type = "button" class = "edit-form-edit-button" value = "Edit" (click) = "onEditButtonClick()">
+      <input type = "button" class = "edit-form-cancel-button" value = "Cancel" (click) = "onCancelButtonClick('edit-form')">
+    </div>
+  </div>
+  <div class = "edit-form-background"></div>
+</div>
