@@ -1,0 +1,28 @@
+@import "../../styles/variables/colors.scss";
+
+.login-form {
+  margin-top: 50px;
+  label {
+    display: block;
+  }
+  .username,
+  .password {
+    border-radius: 5px;
+    padding: 5px 15px;
+    border: 1px solid $c-gray;
+    outline: none;
+    margin-bottom: 20px;
+  }
+  .login-button {
+    background-color: $c-button-color;
+    border: none;
+    color: white;
+    padding: 6px 20px;
+    margin-left: 10px;
+    cursor: pointer;
+  }
+  .login-error {
+    color: red;
+    font-size: 12px;
+  }
+}

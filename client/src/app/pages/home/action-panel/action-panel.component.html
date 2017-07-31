@@ -5,8 +5,7 @@
       <input class = "search-input" type = "text" placeholder = "Course name" [(ngModel)] = "query">
       <input class = "search-action" type = "button" value = "Find" (click) = "onSearchButtonClick()">
     </div>
-    <input class = "add-action" type = "button" value = "Add Course" (click) = "onAddButtonClick('edit-form')">
+    <input class = "add-action" type = "button" value = "Add Course" (click) = "onAddButtonClick('add-form')">
     <input *ngIf = "isSearch" class = "back-action" type = "button" value = "Back to dashboard" (click) = "onBackButtonClick()">
-    <edit-form id = "edit-form"></edit-form>
   </div>
 </div>

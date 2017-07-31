@@ -1,0 +1,8 @@
+<div class = "login-form">
+  <label for = "usernmae">Login: </label>
+  <input type = "text" class = "username" [(ngModel)] = "username">
+  <label for = "password">Password: </label>
+  <input type = "password" class = "password" [(ngModel)] = "password">
+  <input type = "button" class = "login-button" value = "Submit" (click) = "onLoginButtonClick()">
+  <div *ngIf = "unauthorized" class = "login-error">Wrong username or password. Please, try again.</div>
+</div>

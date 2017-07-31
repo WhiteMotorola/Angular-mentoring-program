@@ -1,0 +1,1 @@
+export * from './440.component';

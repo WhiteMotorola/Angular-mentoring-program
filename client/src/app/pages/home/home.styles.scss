@@ -8,4 +8,16 @@
 	.course-list {
 		margin-top: 20px;
 	}
+	.login-data-action {
+		span, input {
+			background-color: $c-primary;
+			border: none;
+			color: white;
+			padding: 6px 20px;
+			margin-left: 10px;
+		}
+		input {
+			float: right;
+		}
+	}
 }

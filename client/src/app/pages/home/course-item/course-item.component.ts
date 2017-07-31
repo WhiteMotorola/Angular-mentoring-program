@@ -3,8 +3,7 @@ import { CourseItem } from '../../../core/entities';
 
 import { Subscription } from 'rxjs';
 
-import { CourseService } from '../../../core/services';
-import { ModalService } from '../../../core/services/index';
+import { CourseService, ModalService } from '../../../core/services';
 
 @Component({
 	selector: 'course-item',
@@ -19,7 +18,8 @@ export class CourseItemComponent {
 
 	private courseServiceSubscription: Subscription;
 
-	constructor(private courseService: CourseService, private modalService: ModalService) {
+	constructor (private courseService: CourseService, private modalService: ModalService ) {
+		
 	}
 
 	onDeleteButtonClick () {

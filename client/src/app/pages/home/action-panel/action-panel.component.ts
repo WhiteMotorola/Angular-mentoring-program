@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation, OnInit, OnDestroy } from '@angular/core';
 import { ModalService, CourseService } from '../../../core/services/index';
 
 import { CourseItem } from '../../../core/entities';
@@ -12,7 +12,7 @@ import { Subscription } from 'rxjs';
 	providers: [],
 	encapsulation: ViewEncapsulation.None
 })
-export class ActionPanelComponent {
+export class ActionPanelComponent implements OnInit, OnDestroy {
 
 	private query: string = '';
 	private isSearch: boolean = false;
@@ -22,11 +22,14 @@ export class ActionPanelComponent {
 	constructor (private modalService: ModalService, private courseService: CourseService) {
 	}
 
-	onAddButtonClick (id: string) {
+	public ngOnInit () {
+	}
+
+	public onAddButtonClick (id: string) {
 		this.modalService.open(id, false);
 	}
 
-	onSearchButtonClick () {
+	public onSearchButtonClick () {
 		this.courseServiceSubscription = this.courseService.searchCourses(this.query)
 			.subscribe((res: CourseItem[]) => {
 				this.isSearch = (this.query !== '');
@@ -34,10 +37,16 @@ export class ActionPanelComponent {
 			});
 	}
 
-	onBackButtonClick () {
+	public onBackButtonClick () {
 		this.courseServiceSubscription = this.courseService.searchCourses('')
 			.subscribe((res: CourseItem[]) => {
 				this.isSearch = false;
 			});
+	}
+
+	public ngOnDestroy () {
+		if (this.courseServiceSubscription) {
+			this.courseServiceSubscription.unsubscribe();
+		}
 	}
 }

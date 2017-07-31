@@ -1,19 +1,40 @@
 let express = require('express');
 let bodyParser = require('body-parser');
 let fs = require('fs');
+let path = require('path');
 let _ = require('underscore');
+let expressJwt = require('express-jwt');
+
+const credentials = require('./credentials');
 
 let app = express();
 app.set('port', 3000);
 
+let authenticate = expressJwt({
+  secret: credentials.authProviders.local.appSecret
+});
+
 app.use(express.static('../client/dist'));
 app.use(bodyParser.json());
+
+let auth = require('./libs/auth.js')(app);
+
+auth.init();
+auth.registerRoutes();
 
 function searchBySubTitle (json, query) { 
   return JSON.parse(json).filter(course => course.subTitle === query) || [];
 }
 
-app.get('/courses', function (req, res, next) {
+app.get('/home', function (req, res, next) {
+  res.status(200).sendFile(path.join(__dirname, '../client/dist/index.html'));
+});
+
+app.get('/440', function (req, res, next) {
+  res.status(200).sendFile(path.join(__dirname, '../client/dist/index.html'));
+});
+
+app.get('/courses', authenticate, function (req, res, next) {
   let coursesJson = fs.readFileSync('./courses.json');
 
   if (req.query.q != undefined && req.query.q != '') {
@@ -23,7 +44,7 @@ app.get('/courses', function (req, res, next) {
   res.send(coursesJson);
 });
 
-app.post('/courses', function (req, res, next) {
+app.post('/courses', authenticate, function (req, res, next) {
   let json = fs.readFileSync('./courses.json');
   let courses = JSON.parse(json);
 
@@ -34,7 +55,7 @@ app.post('/courses', function (req, res, next) {
   res.send(200);
 });
 
-app.delete('/courses/:id', function (req, res, next) {
+app.delete('/courses/:id', authenticate, function (req, res, next) {
   let id = parseInt(req.params.id);
 
   let json = fs.readFileSync('./courses.json');
@@ -47,7 +68,7 @@ app.delete('/courses/:id', function (req, res, next) {
   res.send(200);
 });
 
-app.put('/courses/:id', function (req, res, next) {
+app.put('/courses/:id', authenticate, function (req, res, next) {
   let id = parseInt(req.params.id);
 
   let json = fs.readFileSync('./courses.json');
@@ -65,8 +86,15 @@ app.put('/courses/:id', function (req, res, next) {
 });
 
 app.use(function (req, res, next) {
-  res.status(404);
-  res.send(404);
+  res.status(404).sendFile(path.join(__dirname, '../client/dist/index.html'));
+});
+
+app.use(function (err, req, res, next) {
+  if (err.inner.name === 'TokenExpiredError' && err.message === 'jwt expired') {
+    res.status(440).sendFile(path.join(__dirname, '../client/dist/index.html'));
+  } else {
+    next();
+  }
 });
 
 app.use(function (err, req, res, next) {

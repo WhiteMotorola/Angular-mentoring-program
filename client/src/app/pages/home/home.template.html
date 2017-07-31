@@ -1,7 +1,13 @@
 <div class="home-page">
+	<div class = "login-data-action">
+		<span class = "login-data">User: {{username}}</span>
+		<input type = "button" value = "logout" class = "logout-action" (click) = "onLogoutButtonClick()"/>
+	</div>
 	<action-panel></action-panel>
 	<div class = "course-list">
 		<course-item *ngFor = "let course of courseList" [course]="course"></course-item>
 	</div>
 	<div *ngIf="isLoading">Is loading...</div>
+	<edit-form id = "add-form"></edit-form>
+	<edit-form id = "edit-form"></edit-form>
 </div>

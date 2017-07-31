@@ -1,7 +1,8 @@
 import { Component, ViewEncapsulation, OnInit, OnDestroy } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 
-import { CourseService } from '../../core/services';
+import { CourseService, LoginService } from '../../core/services';
 import { CourseItem } from '../../core/entities';
 
 import { without, find } from 'lodash';
@@ -15,10 +16,12 @@ import { without, find } from 'lodash';
 })
 export class HomeComponent implements OnInit, OnDestroy {
 	private courseServiceSubscription: Subscription;
+
 	private courseList: CourseItem[];
 	private isLoading: boolean = false;
+	private username: string;
 
-	constructor (private courseService: CourseService) {
+	constructor (private courseService: CourseService, private loginService: LoginService, private router: Router, private route: ActivatedRoute) {
 		this.courseList = [];
 
 		courseService.addEvent.subscribe((data: any) => this.courseList.push(data));
@@ -42,16 +45,28 @@ export class HomeComponent implements OnInit, OnDestroy {
 	}
 
 	public ngOnInit() {
-		console.log('Home page init');
+		if (this.loginService.isAuthenticated()) {
+			this.username = this.loginService.getUserInfo();
 
-		this.isLoading = true;
-		this.courseServiceSubscription = this.courseService.getCourseItems().subscribe((res: CourseItem[]) => {
-			this.courseList = res.sort((item1: any, item2: any) => item1.id - item2.id);
-			this.isLoading = false;
-		});
+			this.courseService.setHeaders();
+
+			this.isLoading = true;
+			this.courseServiceSubscription = this.courseService.getCourseItems().subscribe((res: CourseItem[]) => {
+				this.courseList = res.sort((item1: any, item2: any) => item1.id - item2.id);
+				this.isLoading = false;
+			});
+		} else {
+			this.router.navigate(['/'], { relativeTo: this.route });
+		}
+	}
+
+	public onLogoutButtonClick () {
+		this.loginService.logout();
 	}
 
 	public ngOnDestroy() {
-		this.courseServiceSubscription.unsubscribe();
+		if (this.courseServiceSubscription) {
+			this.courseServiceSubscription.unsubscribe();
+		}
 	}
 }

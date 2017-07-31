@@ -40,31 +40,40 @@ export class EditForm implements OnInit, OnDestroy {
 				this.creationDate = course.creationDate;
 				this.duration = course.duration;
 			});
-			modalService.addFormEvent.subscribe(() => this.isEdit = false);
+			modalService.addFormEvent.subscribe(() => {
+				this.title = '';
+				this.subTitle = '';
+				this.creationDate = '';
+				this.duration = '';
+				this.isEdit = false
+			});
 	}
 	
-	ngOnInit(): void {
+	public ngOnInit(): void {
     let modal = this;
-
 		this.element.appendTo('body');
 		this.modalService.add(this);
   }
 
-	ngOnDestroy() {
-		this.courseServiceSubscription.unsubscribe();
+	public ngOnDestroy() {
+		this.modalService.remove(this.id);
+		this.element.remove();
+		if (this.courseServiceSubscription) {
+			this.courseServiceSubscription.unsubscribe();
+		}
 	}
 
-	open(): void {
+	public open(): void {
 		this.element.show();
 		$('body').addClass('modal-open');
 	}
 
-	close(): void {
+	public close(): void {
 		this.element.hide();
 		$('body').removeClass('modal-open');
 	}
 
-	onEditButtonClick () {
+	public onEditButtonClick () {
 		let data = {
 			id: this.courseId,
 			title: this.title,
@@ -73,12 +82,11 @@ export class EditForm implements OnInit, OnDestroy {
 			duration: this.duration
 		}
 		this.courseServiceSubscription = this.courseService.editCourseItem(data)
-			.subscribe(() => {
-				this.onCancelButtonClick('edit-form');
-			});
+			.subscribe(() => { this.onCancelButtonClick(); },
+				(err) => { this.onCancelButtonClick(); });
 	}
 
-	onOkButtonClick () {
+	public onOkButtonClick () {
 		let data = {
 			title: this.title,
 			subTitle: this.subTitle,
@@ -86,16 +94,15 @@ export class EditForm implements OnInit, OnDestroy {
 			duration: this.duration
 		}
 		this.courseServiceSubscription = this.courseService.postCourseItem(data)
-			.subscribe(() => {
-				this.onCancelButtonClick('edit-form');
-			});
+			.subscribe(() => { this.onCancelButtonClick(); },
+				(err) => { this.onCancelButtonClick(); });
 	}
 
-	onCancelButtonClick (id: string) {
+	public onCancelButtonClick () {
 		this.title = '';
 		this.subTitle = '';
 		this.creationDate = '';
 		this.duration = '';
-		this.modalService.close(id);
+		this.close();
 	}
 }

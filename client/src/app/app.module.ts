@@ -22,20 +22,22 @@ import { ROUTES } from './app.routes';
 // App is our top level component
 import { AppComponent } from './app.component';
 import { NoContentComponent } from './pages/no-content';
+import { SessionExpiredComponent } from './pages/440';
 
 // Components
 import { HeaderModule, FooterModule } from './core/components';
 
 // Pages
 import { HomeModule } from './pages/home';
+import { LoginModule } from './pages/login';
 
 // Services
 
-import { CourseService } from './core/services';
-import { ModalService } from './core/services';
+import { CourseService, ModalService, LoginService } from './core/services';
 
 // Application wide providers
 const APP_PROVIDERS = [
+	LoginService,
 	CourseService,
 	ModalService
 ];
@@ -47,16 +49,18 @@ const APP_PROVIDERS = [
 	bootstrap: [AppComponent],
 	declarations: [
 		AppComponent,
-		NoContentComponent
+		NoContentComponent,
+		SessionExpiredComponent
 	],
 	imports: [ // import Angular's modules
 		BrowserModule,
 		FormsModule,
 		HttpModule,
-		RouterModule.forRoot(ROUTES, {preloadingStrategy: PreloadAllModules}),
+		RouterModule.forRoot(ROUTES, { preloadingStrategy: PreloadAllModules, useHash: false }),
 		HeaderModule,
 		FooterModule,
-		HomeModule
+		HomeModule,
+		LoginModule
 	],
 	providers: [ // expose our Services and Providers into Angular's dependency injection
 		ENV_PROVIDERS,
